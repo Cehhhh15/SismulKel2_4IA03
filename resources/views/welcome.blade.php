@@ -33,7 +33,7 @@
             Belajar Jadi Lebih <span class="text-blue-500">Seru!</span>
         </h1>
         <p class="text-slate-400 max-w-2xl mx-auto">
-            Portal game edukasi interaktif untuk siswa SMA. Pilih mata pelajaranmu dan mulai kumpulkan koin serta naikkan levelmu!
+            Portal game edukasi interaktif untuk siswa. Pilih mata gamemu dan mulai kumpulkan koin serta naikkan levelmu!
         </p>
     </header>
 

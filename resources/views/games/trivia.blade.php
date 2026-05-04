@@ -89,7 +89,7 @@
 
         // State Game
         let currentIdx = 0;
-        let coins = 1000; // Modal awal untuk testing, bisa kamu ubah jadi 0
+        let coins = 0; // Modal awal untuk testing, bisa kamu ubah jadi 0
         let level = 1;
         let progress = 0; // 0 sampai 9
         let lastCheckpoint = 0; // Menyimpan titik aman terakhir (0, 3, atau 6)
