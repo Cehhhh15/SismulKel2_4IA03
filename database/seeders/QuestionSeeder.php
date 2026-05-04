@@ -226,6 +226,47 @@ class QuestionSeeder extends Seeder
             ['question_text' => 'Dalam sistem komputer, komponen yang bertindak sebagai otak utama pemroses data (Central Processing Unit) disebut...', 'answer_key' => 'Prosesor', 'options_data' => json_encode(['RAM', 'Harddisk', 'Prosesor', 'Motherboard'])],
         ];
 
+        // ==========================================
+        // GAME 3: COCOK KARTU
+        // ==========================================
+        $cocokKartu = [
+            'Makanan' => [
+                'Nasi Goreng',
+                'Sate',
+                'Bakso',
+                'Rendang',
+            ],
+            'Teknologi' => [
+                'Internet',
+                'Database',
+                'Laravel',
+                'HTML',
+            ],
+            'Matematika' => [
+                'Pecahan',
+                'Persentase',
+                'Aljabar',
+                'Lingkaran',
+            ],
+            'IPA' => [
+                'Fotosintesis',
+                'Gravitasi',
+                'Ekosistem',
+                'Molekul',
+            ],
+            'Indonesia' => [
+                'Pancasila',
+                'Proklamasi',
+                'Bhinneka Tunggal Ika',
+                'Sumpah Pemuda',
+            ],
+            'Multimedia' => [
+                'Pixel',
+                'Audio',
+                'Video',
+                'Animasi',
+            ],
+        ];
 
         // 1. FORMAT & ACAK OPSI SUSUN HURUF
         foreach ($susunHuruf as &$sh) {
@@ -278,6 +319,23 @@ class QuestionSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
+        }
+
+        $cocokKartuGameId = DB::table('games')->where('slug', 'cocok-kartu')->value('id');
+
+        if ($cocokKartuGameId) {
+            foreach ($cocokKartu as $theme => $cards) {
+                foreach ($cards as $cardText) {
+                    $allQuestions[] = [
+                        'game_id' => $cocokKartuGameId,
+                        'question_text' => $cardText,
+                        'answer_key' => $cardText,
+                        'options_data' => json_encode(['theme' => $theme]),
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
+                }
+            }
         }
 
         DB::table('questions')->insert($allQuestions);
