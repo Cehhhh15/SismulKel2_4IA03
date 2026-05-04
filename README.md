@@ -58,36 +58,56 @@ Pastikan kamu sudah menginstal perangkat lunak berikut:
 **Clone Repositori:**
 ```bash
 git clone (https://github.com/Cehhhh15/SismulKel2_4IA03.git)
-cd nama-repo-kamu
-Install Dependensi (Vendor):
+cd SismulKel2_4IA03
+```
 
-Bash
+**Install Dependensi (Vendor):**
+```Bash
 composer install
-Konfigurasi Environment:
+```
+
+**Konfigurasi Environment:**
 Duplikat file konfigurasi dan sesuaikan pengaturan database-nya.
-
-Bash
+```Bash
 cp .env.example .env
-Buka file .env dan pastikan pengaturan database sesuai dengan milikmu:
+```
 
+Buka file .env dan pastikan pengaturan database sesuai dengan milikmu:
+```Bash
 Cuplikan kode
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=sismulkel2_db  # Ubah sesuai nama database yang kamu buat di phpMyAdmin
+DB_DATABASE=sismulkel2_4ia03 
 DB_USERNAME=root
-DB_PASSWORD=
-Generate Application Key:
+DB_PASSWORD= #password anda
+```
 
-Bash
+**Generate Application Key:**
+```Bash
 php artisan key:generate
-Jalankan Migrasi Database:
+```
+
+**Jalankan Migrasi Database:**
 Perintah ini akan membuat semua tabel (games, questions, dll) secara otomatis.
-
-Bash
+```Bash
 php artisan migrate
-Jalankan Server Lokal:
+```
 
-Bash
+**Jalankan Server Lokal:**
+```Bash
 php artisan serve
+```
+
 Aplikasi sekarang dapat diakses melalui browser di: http://127.0.0.1:8000
+
+---
+## 🔐 Akses Default
+Untuk mengelola soal dan menambahkan game baru, masuk ke halaman Admin.
+
+URL Admin: http://127.0.0.1:8000/login
+```bash
+Username: admin
+Password: admin123
+```
+---
