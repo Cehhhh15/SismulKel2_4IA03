@@ -226,19 +226,41 @@ class QuestionSeeder extends Seeder
             ['question_text' => 'Dalam sistem komputer, komponen yang bertindak sebagai otak utama pemroses data (Central Processing Unit) disebut...', 'answer_key' => 'Prosesor', 'options_data' => json_encode(['RAM', 'Harddisk', 'Prosesor', 'Motherboard'])],
         ];
 
-        // Encode opsi Trivia ke JSON
-        foreach ($triviaQuiz as &$tq) {
-            $tq['options_data'] = json_encode($tq['options_data']);
+
+        // 1. FORMAT & ACAK OPSI SUSUN HURUF
+        foreach ($susunHuruf as &$sh) {
+            // Pecah jawaban menjadi array huruf
+            $letters = str_split(str_replace(' ', '', strtoupper($sh['answer_key'])));
+            
+            // ACAK urutan hurufnya agar tidak berurutan membentuk jawaban
+            shuffle($letters); 
+            
+            $sh['options_data'] = json_encode($letters);
         }
 
-        // ==========================================
+        // 2. FORMAT & ACAK OPSI TRIVIA QUIZ
+        foreach ($triviaQuiz as &$tq) {
+            $options = $tq['options_data'];
+            
+            // Cek apakah options berupa string (sudah kena json_encode dari atas)
+            // Jika iya, kita bongkar dulu (decode) menjadi Array agar bisa diacak
+            if (is_string($options)) {
+                $options = json_decode($options, true);
+            }
+            
+            // ACAK posisinya! Yang tadinya selalu di urutan ke-2, kini akan menyebar acak
+            shuffle($options); 
+            
+            // Bungkus kembali (encode) menjadi string JSON untuk disimpan ke database
+            $tq['options_data'] = json_encode($options);
+        }
+
         // GABUNGKAN DAN MASUKKAN KE DATABASE
-        // ==========================================
         $allQuestions = [];
         
         foreach ($susunHuruf as $q) {
             $allQuestions[] = [
-                'game_id' => 1, // Pastikan ID 1 adalah Susun Huruf di database kamu
+                'game_id' => 1,
                 'question_text' => $q['question_text'],
                 'answer_key' => $q['answer_key'],
                 'options_data' => $q['options_data'],
@@ -249,7 +271,7 @@ class QuestionSeeder extends Seeder
 
         foreach ($triviaQuiz as $q) {
             $allQuestions[] = [
-                'game_id' => 2, // Pastikan ID 2 adalah Trivia Quiz di database kamu
+                'game_id' => 2, 
                 'question_text' => $q['question_text'],
                 'answer_key' => $q['answer_key'],
                 'options_data' => $q['options_data'],

@@ -24,6 +24,13 @@
         </a>
     </div>
 
+    <!-- Tombol Reset Progress -->
+    <div class="absolute top-6 right-6">
+        <button onclick="resetProgress()" class="text-xs font-bold text-slate-400 hover:text-rose-500 transition-colors underline">
+            Ulangi Permainan dari Awal
+        </button>
+    </div>
+
     <!-- Main Container -->
     <div class="w-full max-w-md mt-16 flex flex-col gap-4">
         
@@ -373,6 +380,17 @@
         function updateUI() {
             document.getElementById('coinDisplay').innerText = coins;
             saveProgress(); // Simpan koin setelah beli item
+        }
+
+        function resetProgress() {
+        // Munculkan pop-up konfirmasi agar pemain tidak tidak sengaja kepencet
+        if (confirm("Apakah kamu yakin ingin menghapus semua progress (Koin, Level, dan Soal) dan mulai dari awal?")) {
+            // Hapus data dari Local Storage berdasarkan storageKey game yang sedang dimainkan
+            localStorage.removeItem(storageKey);
+            
+            // Muat ulang halaman agar UI kembali ke kondisi awal (Koin 0, Level 1)
+            location.reload(); 
+            }
         }
 
         // Inisialisasi

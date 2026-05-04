@@ -22,6 +22,13 @@
             <span class="text-xl font-bold">←</span> Kembali ke Menu
         </a>
     </div>
+    
+    <!-- Tombol Reset Progress -->
+    <div class="absolute top-6 right-6">
+        <button onclick="resetProgress()" class="text-xs font-bold text-slate-400 hover:text-rose-500 transition-colors underline">
+            Ulangi Permainan dari Awal
+        </button>
+    </div>
 
     <!-- Main Card Game -->
     <div class="bg-[#1e293b] p-6 rounded-3xl shadow-2xl max-w-md w-full border border-slate-700 mt-12 md:mt-0 relative overflow-hidden">
@@ -206,6 +213,17 @@
             currentIdx++;
             saveProgress(); // Simpan progress (soal terbaru, koin, level) saat klik Lanjut
             loadQuestion();
+        }
+
+        function resetProgress() {
+        // Munculkan pop-up konfirmasi agar pemain tidak tidak sengaja kepencet
+        if (confirm("Apakah kamu yakin ingin menghapus semua progress (Koin, Level, dan Soal) dan mulai dari awal?")) {
+            // Hapus data dari Local Storage berdasarkan storageKey game yang sedang dimainkan
+            localStorage.removeItem(storageKey);
+            
+            // Muat ulang halaman agar UI kembali ke kondisi awal (Koin 0, Level 1)
+            location.reload(); 
+            }
         }
 
         // Eksekusi saat pertama kali halaman dimuat
