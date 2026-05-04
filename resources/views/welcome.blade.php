@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Game Edukasi SMA</title>
+    <title>GEMMA - Game Edukasi Multimedia</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -16,8 +16,8 @@
     <!-- Navbar ala CrazyGames -->
     <nav class="bg-[#1e293b] border-b border-slate-700 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
         <div class="flex items-center gap-2">
-            <div class="bg-blue-600 p-2 rounded-lg text-white font-black italic">SMA</div>
-            <span class="text-xl font-extrabold tracking-tight text-white">GAMELAB</span>
+            <div class="bg-blue-600 p-2 rounded-lg text-white font-black italic">GEMMA</div>
+            <span class="text-xl font-extrabold tracking-tight text-white">GEMMA</span>
         </div>
         
         <div class="flex items-center gap-4">

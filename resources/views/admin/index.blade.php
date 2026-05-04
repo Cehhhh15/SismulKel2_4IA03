@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Gamelab</title>
+    <title>Admin Dashboard - GEMMA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -18,7 +18,7 @@
     <!-- Sidebar / Navbar Samping -->
     <aside class="w-72 bg-slate-900 text-white flex flex-col shadow-2xl z-20">
         <div class="p-6 border-b border-slate-800">
-            <h1 class="text-2xl font-black tracking-tight"><span class="text-blue-500">SMA</span> GAMELAB</h1>
+            <h1 class="text-2xl font-black tracking-tight"><span class="text-blue-500">GEMMA</span></h1>
             <p class="text-slate-400 text-xs mt-1">Admin Content Management</p>
         </div>
 
