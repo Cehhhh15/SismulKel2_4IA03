@@ -50,6 +50,40 @@ class AdminController extends Controller
         }
     }
 
+    public function storeCocokKartu(Request $request)
+    {
+        $pairs = $this->validateCocokKartuForm($request);
+
+        try {
+            foreach ($pairs as $pair) {
+                Question::create([
+                    'game_id' => $request->game_id,
+                    'question_text' => trim($pair['question_text']),
+                    'answer_key' => trim($pair['answer_key']),
+                    'options_data' => json_encode([
+                        'theme' => trim($request->theme),
+                    ]),
+                ]);
+            }
+
+            return back()->with('success', 'Pasangan kartu berhasil disimpan!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal menyimpan: ' . $e->getMessage());
+        }
+    }
+
+    private function validateCocokKartuForm(Request $request): array
+    {
+        $validated = $request->validate([
+            'theme' => 'required',
+            'pairs' => 'required|array|min:2',
+            'pairs.*.question_text' => 'required',
+            'pairs.*.answer_key' => 'required',
+        ]);
+
+        return $validated['pairs'];
+    }
+
     public function destroyQuestion($id)
     {
         Question::findOrFail($id)->delete();

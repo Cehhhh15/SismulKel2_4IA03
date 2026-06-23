@@ -30,6 +30,7 @@
                         class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left font-semibold transition-all {{ $index == 0 ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
                     @if($game->slug == 'susun-huruf') 🧩
                     @elseif($game->slug == 'trivia-quiz') 🧠
+                    @elseif($game->slug == 'cocok-kartu') 🃏
                     @else 🎮 @endif
                     {{ $game->name }}
                 </button>
@@ -63,12 +64,12 @@
 
             <!-- Alerts -->
             @if(session('success'))
-                <div class="bg-emerald-500 text-white px-6 py-4 rounded-xl mb-6 shadow-lg flex items-center gap-3 animate-bounce">
+                <div class="flash-alert bg-emerald-500 text-white px-6 py-4 rounded-xl mb-6 shadow-lg flex items-center gap-3 animate-bounce transition-opacity duration-500">
                     <span class="text-xl">✅</span> <strong>Berhasil!</strong> {{ session('success') }}
                 </div>
             @endif
             @if(session('error'))
-                <div class="bg-rose-500 text-white px-6 py-4 rounded-xl mb-6 shadow-lg flex items-center gap-3">
+                <div class="flash-alert bg-rose-500 text-white px-6 py-4 rounded-xl mb-6 shadow-lg flex items-center gap-3 transition-opacity duration-500">
                     <span class="text-xl">⚠️</span> <strong>Gagal!</strong> {{ session('error') }}
                 </div>
             @endif
@@ -153,6 +154,42 @@
                                 </div>
                                 <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-emerald-600/30 transition-all w-full md:w-auto">Simpan Soal Trivia</button>
                             </form>
+
+                        @elseif($game->slug == 'cocok-kartu')
+                            <!-- FORM KHUSUS COCOK KARTU -->
+                            <div class="absolute top-0 right-0 bg-violet-100 text-violet-600 px-4 py-1 rounded-bl-2xl font-black text-xs uppercase">Mode: Cocok Kartu</div>
+                            <h3 class="text-xl font-bold mb-2 text-slate-800">Tambah Pasangan Kartu</h3>
+                            <p class="text-sm text-slate-500 mb-6">Isi tulisan Kartu A. Kartu B akan otomatis mengikuti supaya admin tidak perlu mengetik dua kali.</p>
+                            
+                            <form action="{{ route('admin.cocok-kartu.store') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="game_id" value="{{ $game->id }}">
+
+                                <div class="mb-6">
+                                    <label class="block text-sm font-bold text-slate-600 mb-2">Tema Ronde</label>
+                                    <input type="text" name="theme" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 focus:border-violet-500 outline-none transition" placeholder="Contoh: Makanan, Teknologi, Matematika" required>
+                                </div>
+
+                                <div class="space-y-4 mb-6">
+                                    @for($pairIndex = 0; $pairIndex < 4; $pairIndex++)
+                                        <div class="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4">
+                                            <div class="font-black text-xs text-violet-600 uppercase tracking-widest mb-3">Pasangan {{ $pairIndex + 1 }}</div>
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <div>
+                                                    <label class="block text-sm font-bold text-slate-600 mb-2">Tulisan Kartu A</label>
+                                                    <textarea name="pairs[{{ $pairIndex }}][question_text]" rows="2" class="cocok-card-a w-full border-2 border-slate-200 rounded-xl px-4 py-3 focus:border-violet-500 outline-none transition" data-pair-index="{{ $pairIndex }}" placeholder="Contoh: Pixel" required></textarea>
+                                                </div>
+                                                <div>
+                                                    <label class="block text-sm font-bold text-slate-600 mb-2">Tulisan Kartu B (Otomatis)</label>
+                                                    <textarea name="pairs[{{ $pairIndex }}][answer_key]" rows="2" class="cocok-card-b w-full bg-slate-100 border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-500 outline-none cursor-not-allowed" data-pair-index="{{ $pairIndex }}" placeholder="Mengikuti tulisan Kartu A" readonly required></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endfor
+                                </div>
+
+                                <button type="submit" class="bg-violet-600 hover:bg-violet-700 text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-violet-600/30 transition-all w-full md:w-auto">Simpan Semua Pasangan</button>
+                            </form>
                         @endif
 
                     </div>
@@ -218,6 +255,8 @@
             const activeBtn = document.getElementById('nav-' + slug);
             if(slug === 'trivia-quiz') {
                 activeBtn.className = 'nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left font-semibold transition-all bg-emerald-600 text-white shadow-lg shadow-emerald-900/20';
+            } else if(slug === 'cocok-kartu') {
+                activeBtn.className = 'nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left font-semibold transition-all bg-violet-600 text-white shadow-lg shadow-violet-900/20';
             } else {
                 activeBtn.className = 'nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left font-semibold transition-all bg-blue-600 text-white shadow-lg shadow-blue-900/20';
             }
@@ -275,6 +314,24 @@
                 this.submit();
             });
         }
+
+        // 4. Logika Auto-Copy untuk Game Cocok Kartu
+        document.querySelectorAll('.cocok-card-a').forEach(input => {
+            input.addEventListener('input', function() {
+                const target = document.querySelector(`.cocok-card-b[data-pair-index="${this.dataset.pairIndex}"]`);
+                if (target) {
+                    target.value = this.value;
+                }
+            });
+        });
+
+        // 5. Sembunyikan alert setelah beberapa detik
+        document.querySelectorAll('.flash-alert').forEach(alert => {
+            setTimeout(() => {
+                alert.classList.add('opacity-0');
+                setTimeout(() => alert.remove(), 500);
+            }, 3000);
+        });
 
         // Set Tab Aktif Pertama Kali Berdasarkan Data
         @if(count($games) > 0)

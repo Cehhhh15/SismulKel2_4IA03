@@ -88,6 +88,26 @@
                 </div>
             </div>
 
+            <!-- Card Game: Cocok Kartu -->
+            <div class="game-card group bg-[#1e293b] rounded-3xl overflow-hidden border border-slate-700 hover:border-violet-500 transition-all shadow-xl">
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800" 
+                        class="w-full h-full object-cover transition-transform duration-500" alt="Cocok Kartu">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#1e293b] to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 bg-violet-600 text-xs font-black px-3 py-1 rounded-full text-white">MEMORI</div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-violet-400">Cocok Kartu</h3>
+                    <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+                        Buka kartu, ingat posisinya, lalu cocokkan kartu yang memiliki tulisan sama.
+                    </p>
+                    <a href="{{ route('game.play', 'cocok-kartu') }}" 
+                    class="inline-block w-full text-center bg-violet-600 hover:bg-violet-500 text-white font-black py-3 rounded-2xl transition-all shadow-lg shadow-violet-900/20">
+                        MAIN SEKARANG
+                    </a>
+                </div>
+            </div>
+
             <!-- Card Coming Soon -->
             <div class="bg-[#1e293b]/50 border-2 border-dashed border-slate-700 rounded-3xl flex flex-col items-center justify-center p-12 text-center opacity-60">
                 <div class="text-4xl mb-4">🎮</div>

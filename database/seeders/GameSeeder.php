@@ -26,5 +26,14 @@ class GameSeeder extends Seeder
                 'description' => 'Uji wawasanmu dengan kuis pilihan ganda yang menegangkan!'
             ]
         );
+
+        // 3. Buat Data Game Cocok Kartu
+        Game::firstOrCreate(
+            ['slug' => 'cocok-kartu'],
+            [
+                'name' => 'Cocok Kartu',
+                'description' => 'Buka kartu dan cocokkan kartu lain dengan tulisan yang sama.'
+            ]
+        );
     }
 }

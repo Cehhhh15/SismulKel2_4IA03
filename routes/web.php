@@ -21,5 +21,6 @@ Route::get('/play/{slug}', [GameController::class, 'play'])->name('game.play');
 Route::middleware(['admin.check'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     Route::post('/admin/question', [AdminController::class, 'storeQuestion'])->name('admin.question.store');
+    Route::post('/admin/cocok-kartu', [AdminController::class, 'storeCocokKartu'])->name('admin.cocok-kartu.store');
     Route::delete('/admin/question/{id}', [AdminController::class, 'destroyQuestion'])->name('admin.question.destroy');
 });
